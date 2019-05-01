@@ -25,6 +25,9 @@ jobs:
       OM_DISK: ((om-disk))
       OM_NIC: ((om-nic))
       PAS_PUB_IP: ((pas-ip))
+      app_id: ((azure-client-id))
+      client_secret: ((azure-client-secret))
+      tenant: ((azure-tenant-id))
     config:
       platform: linux
       image_resource:
