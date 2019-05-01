@@ -1,0 +1,35 @@
+---
+resources:
+- name: src
+  type: git
+  source:
+    uri: https://github.com/vponnam/platform-automations.git
+
+jobs:
+- name: Delete-OM
+  plan:
+  - get: src
+  - task: delete-iaas-and-om
+    params:
+      USER: ((user))
+      LOCATION: ((location))
+      STORAGE_ACC_NAME: ((storage-acc-name))
+      OPS_MAN_IMAGE_URL: ((om-url))
+      OM_VERSION: ((om-version))
+      OM_VM_NAME: ((om-vm-name))
+      NSG_NAME: ((nsg)) 
+      NETWORK: ((network))
+      SUBNET: ((subnet))
+      OM_IP: ((om-ip))
+      OM_DISK: ((om-disk))
+      OM_NIC: ((om-nic))
+      PAS_PUB_IP: ((pas-ip))
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source: {repository: vponnam/pipelines}
+      inputs:
+      - name: src
+      run:
+        path: src/az/create-iaas.sh

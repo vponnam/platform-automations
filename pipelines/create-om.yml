@@ -1,0 +1,35 @@
+---
+resources:
+- name: src
+  type: git
+  source:
+    uri: https://github.com/vponnam/platform-automations.git
+
+jobs:
+- name: Create-OM
+  plan:
+  - get: src
+  - task: create-iaas-and-om
+    params:
+      USER: ((user))
+      LOCATION: ((location))
+      STORAGE_ACC_NAME: ((storage-acc-name))
+      OPS_MAN_IMAGE_URL: ((om-url))
+      OM_VERSION: ((om-version))
+      NSG_NAME: ((nsg)) 
+      NETWORK: ((network))
+      SUBNET: ((subnet))
+      OM_IP: ((om-ip))
+      OM_DISK: ((om-disk))
+      OM_NIC: ((om-nic))
+      PAS_PUB_IP: ((pas-ip))
+      SSH_KEY_PATH: ((om-ssh-public))
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source: {repository: vponnam/pipelines}
+      inputs:
+      - name: src
+      run:
+        path: src/az/create-iaas.sh
