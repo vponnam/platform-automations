@@ -21,7 +21,7 @@ az network public-ip delete -g ${USER} -n ${PAS_PUB_IP}
 az network public-ip delete -g ${USER} -n ${OM_IP}
 
 #Delete Storage Account
-az storage account delete -g ${USER} -n ${STORAGE_ACC_NAME} --yes
+az storage account delete -g ${USER} -n ${USER}storageaccount --yes
 
 #Delete vnet
 az network vnet delete -g ${USER} -n ${NETWORK}

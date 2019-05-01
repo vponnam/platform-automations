@@ -47,12 +47,12 @@ az network vnet subnet create --name ${SUBNET} \
 --address-prefix 10.0.0.0/25 \
 --network-security-group ${NSG_NAME}
 
-az storage account create --name ${STORAGE_ACC_NAME} \
+az storage account create --name ${USER}storageaccount \
 --resource-group ${USER} \
 --sku Standard_LRS \
 --location ${LOCATION}
 
-CONNECTION_STRING=$(az storage account show-connection-string --name ${STORAGE_ACC_NAME} --resource-group ${USER} | jq .connectionString)
+CONNECTION_STRING=$(az storage account show-connection-string --name ${USER}storageaccount --resource-group ${USER} | jq .connectionString)
 
 az storage container create --name opsmanager \
 --connection-string ${CONNECTION_STRING}
@@ -95,7 +95,7 @@ fi
 
 az image create --resource-group ${USER} \
 --name opsman-image-${OM_VERSION} \
---source https://${STORAGE_ACC_NAME}.blob.core.windows.net/opsmanager/opsman-${OM_VERSION}.vhd \
+--source https://${USER}storageaccount.blob.core.windows.net/opsmanager/opsman-${OM_VERSION}.vhd \
 --location ${LOCATION} \
 --os-type Linux
 
