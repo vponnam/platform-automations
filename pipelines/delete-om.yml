@@ -4,6 +4,7 @@ resources:
   type: git
   source:
     uri: https://github.com/vponnam/platform-automations.git
+    branch: dev
 
 jobs:
 - name: Delete-OM
@@ -32,4 +33,4 @@ jobs:
       inputs:
       - name: src
       run:
-        path: src/az/create-iaas.sh
+        path: src/az/delete-iaas.sh
