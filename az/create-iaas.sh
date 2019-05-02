@@ -93,6 +93,9 @@ do
 done
 fi
 
+#safe sleep for status change delay
+sleep 15
+
 az image create --resource-group ${USER} \
 --name opsman-image-${OM_VERSION} \
 --source https://${USER}storageaccount.blob.core.windows.net/opsmanager/opsman-${OM_VERSION}.vhd \
