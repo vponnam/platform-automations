@@ -100,7 +100,7 @@ az image create --resource-group ${USER} \
 --os-type Linux
 
 #Launch the Opsman VM
-az vm create --name opsman-${OM_VERSION} --resource-group ${RESOURCE_GROUP} \
+az vm create --name opsman-${OM_VERSION} --resource-group ${USER} \
  --location ${LOCATION} \
  --nics ${OM_NIC} \
  --image opsman-image-${OM_VERSION} \

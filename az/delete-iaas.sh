@@ -27,6 +27,6 @@ az storage account delete -g ${USER} -n ${USER}storageaccount --yes
 az network vnet delete -g ${USER} -n ${NETWORK}
 
 #Delete NSG
-az network nsg delete -g ${USER} -n ${NSG}
+az network nsg delete -g ${USER} -n ${NSG_NMAE}
 
 printf "\nSuccessfully completed clean-up process.\n"
