@@ -29,4 +29,7 @@ az network vnet delete -g ${USER} -n ${NETWORK}
 #Delete NSG
 az network nsg delete -g ${USER} -n ${NSG_NAME}
 
+#Delete RG
+az group delete -n ${USER} -y
+
 printf "\nSuccessfully completed clean-up process.\n"
