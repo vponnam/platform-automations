@@ -102,6 +102,9 @@ az image create --resource-group ${USER} \
 --location ${LOCATION} \
 --os-type Linux
 
+# Create the SSH keyfile
+cat ${SSH_KEY_PATH} > SSH_KEY
+
 #Launch the Opsman VM
 az vm create --name opsman-${OM_VERSION} --resource-group ${USER} \
  --location ${LOCATION} \
@@ -112,7 +115,7 @@ az vm create --name opsman-${OM_VERSION} --resource-group ${USER} \
  --admin-username ubuntu \
  --size Standard_DS2_v2 \
  --storage-sku Standard_LRS \
- --ssh-key-value ${SSH_KEY_PATH}
+ --ssh-key-value ${SSH_KEY}
 
 echo "OpsManager VM can be access by using this IP: ${opsmanIP}" 
 
