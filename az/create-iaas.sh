@@ -98,7 +98,7 @@ az image create --resource-group ${USER} \
 --source https://${USER}storageaccount.blob.core.windows.net/opsmanager/opsman-${OM_VERSION}.vhd \
 --location ${LOCATION} \
 --os-type Linux
-sleep 30
+sleep 10
 
 # Create the SSH keyfile
 echo ${SSH_KEY_PATH} > SSH_KEY
@@ -120,7 +120,7 @@ then
   break
 fi
 printf "Retrying the vm create task..\n"
-sleep 30
+sleep 15
 done
 
 echo "OpsManager VM can be access by using this IP: ${opsmanIP}" 
