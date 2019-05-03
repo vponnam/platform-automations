@@ -114,7 +114,7 @@ if az vm create --name opsman-${OM_VERSION} --resource-group ${USER} \
  --admin-username ubuntu \
  --size Standard_DS2_v2 \
  --storage-sku Standard_LRS \
- --ssh-key-value ${SSH_KEY}
+ --ssh-key-value SSH_KEY
 then
   printf "OpsMan vm created.\n"
   break
