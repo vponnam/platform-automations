@@ -5,7 +5,7 @@ set -ue
 az login --service-principal -u $app_id -p $client_secret -t $tenant
 
 #Delete OM-VM
-az vm delete -g ${USER} -n ${OM_VM_NAME} --yes
+az vm delete -g ${USER} -n opsman-${OM_VERSION} --yes
 
 #Delete OM Nic
 az network nic delete -g ${USER} -n ${OM_NIC}

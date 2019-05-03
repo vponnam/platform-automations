@@ -14,10 +14,8 @@ jobs:
     params:
       USER: ((user))
       LOCATION: ((location))
-      STORAGE_ACC_NAME: ((storage-acc-name))
       OPS_MAN_IMAGE_URL: ((om-url))
       OM_VERSION: ((om-version))
-      OM_VM_NAME: ((om-vm-name))
       NSG_NAME: ((nsg)) 
       NETWORK: ((network))
       SUBNET: ((subnet))
