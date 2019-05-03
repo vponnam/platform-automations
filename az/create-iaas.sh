@@ -101,10 +101,10 @@ az image create --resource-group ${USER} \
 sleep 30
 
 # Create the SSH keyfile
-cat ${SSH_KEY_PATH} > SSH_KEY
+cat "${SSH_KEY_PATH}" > SSH_KEY
 
 #Launch the Opsman VM
-for retry in {1..5}; do
+for retry in {1..3}; do
 if az vm create --name opsman-${OM_VERSION} --resource-group ${USER} \
  --location ${LOCATION} \
  --nics ${OM_NIC} \
