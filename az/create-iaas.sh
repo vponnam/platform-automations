@@ -101,7 +101,7 @@ az image create --resource-group ${USER} \
 sleep 30
 
 # Create the SSH keyfile
-cat "${SSH_KEY_PATH}" > SSH_KEY
+echo ${SSH_KEY_PATH} > SSH_KEY
 
 #Launch the Opsman VM
 for retry in {1..3}; do
