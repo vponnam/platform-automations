@@ -1,4 +1,8 @@
-azure:
+director-auth:
+  username: ((om-user))
+  password: ((om-pass))
+  decryption-passphrase: ((om-decrypt))
+
 environment:
   target: ((om-target))
   connect-timeout: 30            # default 5
