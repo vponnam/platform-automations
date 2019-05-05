@@ -39,11 +39,14 @@ jobs:
       - name: src
       run:
         path: src/az/iaas-provision/create-iaas.sh
+
+- name: Vault-Creds
   - task: write-vault-secrets
     params:
       VAULT_TOKEN: ((vault-token))
       VAULT_ADDR: ((vault-addr))
       VAULT_SKIP_VERIFY: ((vault-ssl))
+      USER: ((user))
     config:
       platform: linux
       image_resource:
