@@ -28,6 +28,8 @@ jobs:
       client_secret: ((azure-client-secret))
       tenant: ((azure-tenant-id))
       VAULT_TOKEN: ((vault-token))
+      VAULT_ADDR: ((vault-addr))
+      VAULT_SKIP_VERIFY: ((vault-ssl))
     config:
       platform: linux
       image_resource:
