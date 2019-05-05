@@ -32,4 +32,9 @@ az network nsg delete -g ${USER} -n ${NSG_NAME}
 #Delete RG
 az group delete -n ${USER} -y
 
+# Vault clean-up
+valut delete concourse/main/${USER}/om-target
+vault delete concourse/main/${USER}/om-user
+vault delete concourse/main/${USER}/om-pass
+
 printf "\nSuccessfully completed clean-up process.\n"
