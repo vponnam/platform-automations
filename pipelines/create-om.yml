@@ -41,6 +41,8 @@ jobs:
         path: src/az/iaas-provision/create-iaas.sh
 
 - name: Vault-Creds
+  plan:
+  - get: src
   - task: write-vault-secrets
     params:
       VAULT_TOKEN: ((vault-token))

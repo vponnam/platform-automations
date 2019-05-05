@@ -69,7 +69,6 @@ az storage table create --name stemcells \
 opsmanIP=$(az network public-ip create --name ${OM_IP} --resource-group ${USER} --location ${LOCATION} --allocation-method Static | jq -r .publicIp.ipAddress)
 
 #Record om-ip in vaule under user pipeline
-vault login ${VAULT_TOKEN}
 vault write concourse/main/${USER}/om-target value=${opsmanIP}
 
 az network nic create --vnet-name ${NETWORK} \
