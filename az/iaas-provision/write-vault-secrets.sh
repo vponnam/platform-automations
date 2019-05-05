@@ -2,7 +2,7 @@
 
 set -eu
 
-vault login $token
+vault login ${VAULT_TOKEN}
 
 vault write concourse/main/${USER}/om-user value=admin
 pass=$(openssl rand -base64 24)

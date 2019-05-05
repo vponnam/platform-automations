@@ -34,4 +34,4 @@ jobs:
       inputs:
       - name: src
       run:
-        path: src/az/delete-iaas.sh
+        path: src/az/iaas-provision/delete-iaas.sh

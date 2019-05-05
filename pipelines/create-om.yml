@@ -40,6 +40,10 @@ jobs:
       run:
         path: src/az/iaas-provision/create-iaas.sh
   - task: write-vault-secrets
+    params:
+      VAULT_TOKEN: ((vault-token))
+      VAULT_ADDR: ((vault-addr))
+      VAULT_SKIP_VERIFY: ((vault-ssl))
     config:
       platform: linux
       image_resource:
