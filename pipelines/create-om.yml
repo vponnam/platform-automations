@@ -14,7 +14,6 @@ jobs:
     params:
       USER: ((user))
       LOCATION: ((location))
-      STORAGE_ACC_NAME: ((storage-acc-name))
       OPS_MAN_IMAGE_URL: ((om-url))
       OM_VERSION: ((om-version))
       NSG_NAME: ((nsg)) 
@@ -28,6 +27,7 @@ jobs:
       app_id: ((azure-client-id))
       client_secret: ((azure-client-secret))
       tenant: ((azure-tenant-id))
+      VAULT_TOKEN: ((vault-token))
     config:
       platform: linux
       image_resource:
@@ -36,4 +36,35 @@ jobs:
       inputs:
       - name: src
       run:
-        path: src/az/create-iaas.sh
+        path: src/az/iaas-provision/create-iaas.sh
+  - task: write-vault-secrets
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source: {repository: vponnam/pipelines}
+      inputs:
+      - name: src
+      run:
+        path: src/az/iaas-provision/write-vault-secrets.sh
+ 
+- name: Configure-Director
+  plan:
+  - get: src
+  - task: configure-director
+    params:
+      env: ((environment))
+    config:
+      platform: linux
+      image_resource: 
+        type: docker-image
+        source: {repository: vponnam/pipelines}
+      inputs: 
+      - name: src
+      run:
+        path: bash
+        args:
+        - -exc
+        - |
+          bosh int `echo $env` > env.yml
+          om --env env.yml configure-authentication

@@ -68,6 +68,10 @@ az storage table create --name stemcells \
 
 opsmanIP=$(az network public-ip create --name ${OM_IP} --resource-group ${USER} --location ${LOCATION} --allocation-method Static | jq -r .publicIp.ipAddress)
 
+#Record om-ip in vaule under user pipeline
+vault login ${VAULT_TOKEN}
+vault write concourse/main/${USER}/om-target value=${opsmanIP}
+
 az network nic create --vnet-name ${NETWORK} \
 --subnet ${SUBNET} --network-security-group ${NSG_NAME} \
 --private-ip-address 10.0.0.10 \
@@ -100,7 +104,7 @@ az image create --resource-group ${USER} \
 --os-type Linux
 sleep 10
 
-# Create the SSH keyfile
+# Create the SSH keyfile locally
 echo ${SSH_KEY_PATH} > SSH_KEY
 
 #Launch the Opsman VM
@@ -128,3 +132,4 @@ echo "OpsManager VM can be access by using this IP: ${opsmanIP}"
 PAS_Domain_IP=$(az network public-ip create --name pas-domains-ip --resource-group ${USER} --location ${LOCATION} --allocation-method Static | jq -r .publicIp.ipAddress)
 
 echo "IP for PAS wildcard domains: *.${PAS_Domain_IP}.xip.io"
+vault write concourse/main/${USER}/pas-domain value=*.${PAS_Domain_IP}.xip.io
