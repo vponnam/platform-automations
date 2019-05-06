@@ -13,7 +13,7 @@ networks-configuration:
       gateway: 10.0.0.1
       reserved_ip_ranges: 10.0.0.1-10.0.0.10
       availability_zone_names:
-      - ((az))
+      - "null" 
 properties-configuration:
   iaas_configuration:
     subscription_id: ((subscription)) 
