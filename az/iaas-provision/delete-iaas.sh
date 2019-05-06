@@ -33,7 +33,7 @@ az network nsg delete -g ${USER} -n ${NSG_NAME}
 az group delete -n ${USER} -y
 
 # Vault clean-up
-valut delete concourse/main/${USER}/om-target
+vault delete concourse/main/${USER}/om-target
 vault delete concourse/main/${USER}/om-user
 vault delete concourse/main/${USER}/om-pass
 vault delete concourse/main/${USER}/om-decrypt

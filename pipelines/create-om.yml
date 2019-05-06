@@ -42,6 +42,7 @@ jobs:
 
   # set-up required vault creds for director config
   - task: write-vault-secrets
+    attempts: 3
     params:
       NETWORK: ((network))
       SUBNET: ((subnet))
@@ -61,6 +62,7 @@ jobs:
 
   # tasks to configure OpsMan bosh director
   - task: configure-director-auth
+    attempts: 3
     params:
       OM_ENV: ((environment))
       OM_AUTH: ((director-auth))
@@ -82,6 +84,7 @@ jobs:
           bosh int <(echo "${OM_AUTH}") > om-configs/auth.yml
           om --env om-configs/env.yml configure-authentication --config om-configs/auth.yml
   - task: configure-director-properties
+    attempts: 3
     params:
       Director_Prop: ((director-properties))
     config:
@@ -104,6 +107,7 @@ jobs:
   plan:
   - get: src
   - task: Delete-OM
+    attempts: 3
     params:
       USER: ((user))
       LOCATION: ((location))
