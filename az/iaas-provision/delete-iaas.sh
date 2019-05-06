@@ -11,7 +11,7 @@ az vm delete -g ${USER} -n opsman-${OM_VERSION} --yes
 az network nic delete -g ${USER} -n ${OM_NIC}
 
 #Delete OM disk
-az disk delete -g ${USER} -n ${OM_DISK} --yes 
+az disk delete -g ${USER} -n ${OM_DISK} --yes
 
 #Delete image
 az image delete -g ${USER} -n opsman-image-${OM_VERSION}
@@ -36,5 +36,8 @@ az group delete -n ${USER} -y
 valut delete concourse/main/${USER}/om-target
 vault delete concourse/main/${USER}/om-user
 vault delete concourse/main/${USER}/om-pass
+vault delete concourse/main/${USER}/om-decrypt
+vault write concourse/main/${USER}/storage-account
+vault write concourse/main/${USER}/resource-group
 
 printf "\nSuccessfully completed clean-up process.\n"

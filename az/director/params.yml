@@ -11,3 +11,16 @@ environment:
   username: ((om-user))
   password: ((om-pass))
   decryption-passphrase: ((om-decrypt))
+
+director-properties:
+  network-name: ((network))
+  subnet: ((subnet))
+  subscription: ((azure-subscription))
+  tenant_id: ((azure-tenant-id))
+  client_id: ((azure-client-id))
+  client_secret: ((azure-client-secret))
+  resource_group_name: ((resource-group))
+  bosh_storage_account_name: ((storage-account))
+  ssh_public_key: ((om-ssh-public))
+  ssh_private_key: ((om-ssh-private))
+
