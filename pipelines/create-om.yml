@@ -1,11 +1,4 @@
 ---
-resource_types:
-- name: pivnet
-  type: docker-image
-  source:
-    repository: pivotalcf/pivnet-resource
-    tag: latest-final
-
 resources:
 - name: src
   type: git
@@ -47,11 +40,11 @@ jobs:
       run:
         path: src/az/iaas-provision/create-iaas.sh
 
-- name: Vault-Creds
-  plan:
-  - get: src
+  # set-up required vault creds for director config
   - task: write-vault-secrets
     params:
+      NETWORK: ((network))
+      SUBNET: ((subnet))
       VAULT_TOKEN: ((vault-token))
       VAULT_ADDR: ((vault-addr))
       VAULT_SKIP_VERIFY: ((vault-ssl))
@@ -66,39 +59,8 @@ jobs:
       run:
         path: src/az/iaas-provision/write-vault-secrets.sh
 
-- name: Delete-OM
-  plan:
-  - get: src
-  - task: Delete-OM
-    params:
-      USER: ((user))
-      LOCATION: ((location))
-      OPS_MAN_IMAGE_URL: ((om-url))
-      OM_VERSION: ((om-version))
-      NSG_NAME: ((nsg))
-      NETWORK: ((network))
-      SUBNET: ((subnet))
-      OM_IP: ((om-ip))
-      OM_DISK: ((om-disk))
-      OM_NIC: ((om-nic))
-      PAS_PUB_IP: ((pas-ip))
-      app_id: ((azure-client-id))
-      client_secret: ((azure-client-secret))
-      tenant: ((azure-tenant-id))
-    config:
-      platform: linux
-      image_resource:
-        type: docker-image
-        source: {repository: vponnam/pipelines}
-      inputs:
-      - name: src
-      run:
-        path: src/az/iaas-provision/delete-iaas.sh
-
-- name: Configure-Director
-  plan:
-  - get: src
-  - task: configure-auth
+  # tasks to configure OpsMan bosh director
+  - task: configure-director-auth
     params:
       OM_ENV: ((environment))
       OM_AUTH: ((director-auth))
@@ -119,21 +81,53 @@ jobs:
           bosh int <(echo "${OM_ENV}") > om-configs/env.yml
           bosh int <(echo "${OM_AUTH}") > om-configs/auth.yml
           om --env om-configs/env.yml configure-authentication --config om-configs/auth.yml
-
-  - task: configure-director
+  - task: configure-director-properties
     params:
       Director_Prop: ((director-properties))
-      config:
-        platform: linux
-        image_resource: docker-image
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
         source: {repository: vponnam/pipelines}
-        inputs:
-        - name: src
-        - name: om-configs
-        run:
-         path: bash
-         args:
-         - "-c"
-         - |
-           bosh int <(echo "${Director_Prop}") > dir-params.yml
-           om --env om-configs/env.yml configure-director -c src/az/director/director.yml --vars-file dir-params.yml
+      inputs:
+      - name: src
+      - name: om-configs
+      run:
+        path: bash
+        args:
+        - "-c"
+        - |
+          bosh int <(echo "${Director_Prop}") > dir-params.yml
+          om --env om-configs/env.yml configure-director -c src/az/director/director.yml --vars-file dir-params.yml
+
+- name: Delete-OM
+  plan:
+  - get: src
+  - task: Delete-OM
+    params:
+      USER: ((user))
+      LOCATION: ((location))
+      OPS_MAN_IMAGE_URL: ((om-url))
+      OM_VERSION: ((om-version))
+      NSG_NAME: ((nsg))
+      NETWORK: ((network))
+      SUBNET: ((subnet))
+      OM_IP: ((om-ip))
+      OM_DISK: ((om-disk))
+      OM_NIC: ((om-nic))
+      PAS_PUB_IP: ((pas-ip))
+      app_id: ((azure-client-id))
+      client_secret: ((azure-client-secret))
+      tenant: ((azure-tenant-id))
+      VAULT_TOKEN: ((vault-token))
+      VAULT_ADDR: ((vault-addr))
+      VAULT_SKIP_VERIFY: ((vault-ssl))
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source: {repository: vponnam/pipelines}
+      inputs:
+      - name: src
+      run:
+        path: src/az/iaas-provision/delete-iaas.sh

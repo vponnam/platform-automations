@@ -8,6 +8,9 @@ vault write concourse/main/${USER}/om-pass value=$pass
 vault write concourse/main/${USER}/om-decrypt value=$pass
 vault write concourse/main/${USER}/storage-account value=${USER}storageaccount
 vault write concourse/main/${USER}/resource-group value=${USER}
+vault write concourse/main/${USER}/network value=$NETWORK
+vault write concourse/main/${USER}/subnet value=$SUBNET
+
 
 #Create the wildcard certs for app/sys domain/s
 domain=$(vault read -field=value concourse/main/${USER}/pas-domain)

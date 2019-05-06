@@ -37,7 +37,10 @@ valut delete concourse/main/${USER}/om-target
 vault delete concourse/main/${USER}/om-user
 vault delete concourse/main/${USER}/om-pass
 vault delete concourse/main/${USER}/om-decrypt
-vault write concourse/main/${USER}/storage-account
-vault write concourse/main/${USER}/resource-group
+vault delete concourse/main/${USER}/storage-account
+vault delete concourse/main/${USER}/resource-group
+vault delete concourse/main/${USER}/network
+vault delete concourse/main/${USER}/subnet
+
 
 printf "\nSuccessfully completed clean-up process.\n"
