@@ -15,7 +15,7 @@ aws ec2 create-tags --resources "$vpc_id" --tags Key=Name,Value="${USER}-vpc"
 vault write concourse/main/${USER}/aws_vpc_id value=$vpc_id
 
 # Create subnet
-subnet_id=$(aws ec2 create-subnet --vpc-id $vpc_id  --availability-zone ${location}b--cidr-block 10.0.10.0/25 | jq -r .Subnet.SubnetId)
+subnet_id=$(aws ec2 create-subnet --vpc-id $vpc_id  --availability-zone ${location}b --cidr-block 10.0.10.0/25 | jq -r .Subnet.SubnetId)
 vault write concourse/main/${USER}/aws_public_subnet value=$subnet_id
 aws ec2 create-tags --resources "$subnet_id" --tags Key=Name,Value="${USER}-public-subnet"
 
