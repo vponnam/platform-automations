@@ -1,0 +1,83 @@
+---
+resources:
+- name: src
+  type: git
+  source:
+    uri: https://github.com/vponnam/platform-automations.git
+    branch: dev
+
+jobs:
+- name: AWS-Create-OM
+  plan:
+  - get: src
+  - task: aws-create-iaas-and-om
+    params:
+      USER: ((user))
+      location: ((aws-region))
+      om_ami_id: ((om-ami))
+      ssh_key_name: ((aws-ssh-key))
+      VAULT_TOKEN: ((vault-token))
+      VAULT_ADDR: ((vault-addr))
+      VAULT_SKIP_VERIFY: ((vault-ssl))
+      AWS_ACCESS_KEY_ID: ((aws-id))
+      AWS_SECRET_ACCESS_KEY: ((aws-key))
+      AWS_DEFAULT_REGION: ((aws-region))
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source: {repository: vponnam/pipelines}
+      inputs:
+      - name: src
+      run:
+        path: src/aws/iaas-provision/create-iaas.sh
+
+- name: AWS-Delete-OM
+  plan:
+  - get: src
+  - task: aws-delete-iaas-and-om
+    params:
+      USER: ((user))
+      AWS_ACCESS_KEY_ID: ((aws-id))
+      AWS_SECRET_ACCESS_KEY: ((aws-key))
+      AWS_DEFAULT_REGION: ((aws-region))
+      VAULT_TOKEN: ((vault-token))
+      VAULT_ADDR: ((vault-addr))
+      VAULT_SKIP_VERIFY: ((vault-ssl))
+      vpc_id: ((aws_vpc_id))
+      pub_subnet: ((aws_public_subnet))
+      priv_subnet: ((aws_private_subnet))
+      nat_gw: ((aws_nat_gateway))
+      rt_id1: ((aws_route_table))
+      rt_id2: ((aws_private_route_table))
+      gw_id: ((aws_gw_id))
+      eip: ((aws_nat_eip))
+      om_nsg: ((aws_om_nsg))
+      pas_internal_nsg: ((aws_pas_internal_nsg))
+      pas_web_nsg: ((aws_web_elb_nsg))
+      pas_web_elb: ((aws_web_elb))
+      om_id: ((aws_om_id))
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source: {repository: vponnam/pipelines}
+      inputs:
+      - name: src
+      run:
+        path: src/aws/iaas-provision/delete-iaas.sh
+  - task: aws-delete-iaas-and-om
+    params:
+      USER: ((user))
+      VAULT_TOKEN: ((vault-token))
+      VAULT_ADDR: ((vault-addr))
+      VAULT_SKIP_VERIFY: ((vault-ssl))
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source: {repository: vponnam/pipelines}
+      inputs:
+      - name: src
+      run:
+        path: src/aws/iaas-provision/delete-vault-creds.sh
