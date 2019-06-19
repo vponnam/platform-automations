@@ -32,6 +32,16 @@ jobs:
       run:
         path: src/aws/iaas-provision/create-iaas.sh
 
+    # write-vault-secrets
+  - task: aws-write-vault-secrets
+    params:
+      USER: ((user))
+      location: ((aws-region))
+      NETWORK: ((aws-network))
+      SUBNET: ((aws-subnet))
+
+
+
 - name: AWS-Delete-OM
   plan:
   - get: src
@@ -66,7 +76,7 @@ jobs:
       - name: src
       run:
         path: src/aws/iaas-provision/delete-iaas.sh
-  - task: aws-delete-iaas-and-om
+  - task: aws-delete-vault-creds
     params:
       USER: ((user))
       VAULT_TOKEN: ((vault-token))

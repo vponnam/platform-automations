@@ -79,4 +79,5 @@ do
 done
 
 OM_IP=$(aws ec2 describe-instances --instance-ids $opsman_vm | jq -r .Reservations[].Instances[].NetworkInterfaces[].Association.PublicIp)
+vault write concourse/main/${USER}/aws-om-target value=${OM_IP}
 printf "\n${USER}-OpsManVM can be accessed with IP: $OM_IP\n"

@@ -10,6 +10,8 @@ jobs:
 - name: Delete-OM
   plan:
   - get: src
+  - task: delete-pcf-installation
+    params
   - task: delete-iaas-and-om
     params:
       USER: ((user))

@@ -1,31 +1,25 @@
+az-configuration:
+- name: us-east-2c
+  iaas_configuration_guid: 420996cd47f403b40188
 network-assignment:
   network:
-    name: PCF-Network
+    name: PCF-Private-Network
   other_availability_zones: []
+  singleton_availability_zone:
+    name: us-east-2c
 networks-configuration:
   icmp_checks_enabled: false
   networks:
-  - name: PCF-Network
+  - name: PCF-Private-Network
     subnets:
-    - iaas_identifier: ((network-name))/((subnet))
-      cidr: 10.0.0.0/24
-      dns: 168.63.129.16
-      gateway: 10.0.0.1
-      reserved_ip_ranges: 10.0.0.1-10.0.0.10
+    - iaas_identifier: subnet-045b8ba8607a34e8e
+      cidr: 10.0.10.128/25
+      dns: 10.0.10.2
+      gateway: 10.0.10.129
+      reserved_ip_ranges: 10.0.10.128-10.0.10.135
       availability_zone_names:
-      - "null" 
+      - us-east-2c
 properties-configuration:
-  iaas_configuration:
-    subscription_id: ((subscription)) 
-    tenant_id: ((tenant_id)) 
-    client_id: ((client_id)) 
-    client_secret: ((client_secret)) 
-    resource_group_name: ((resource_group_name)) 
-    bosh_storage_account_name: ((bosh_storage_account_name)) 
-    storage_account_type: Standard_LRS
-    ssh_public_key: ((ssh_public_key)) 
-    ssh_private_key: |
-      ((ssh_private_key))
   director_configuration:
     allow_legacy_agents: true
     blobstore_type: local
@@ -45,13 +39,23 @@ properties-configuration:
     local_blobstore_options:
       tls_enabled: true
     ntp_servers_string: 0.north-america.pool.ntp.org, 1.north-america.pool.ntp.org
-    post_deploy_enabled: true
+    post_deploy_enabled: false
     resurrector_enabled: false
     retry_bosh_deploys: false
     skip_director_drain: true
   dns_configuration:
     excluded_recursors: []
     handlers: []
+  iaas_configuration:
+    additional_cloud_properties: {}
+    encrypted: false
+    guid: ((properties-configuration_iaas_configuration_guid))
+    iam_instance_profile: ((properties-configuration_iaas_configuration_iam_instance_profile))
+    key_pair_name: ((properties-configuration_iaas_configuration_key_pair_name))
+    kms_key_arn: ((properties-configuration_iaas_configuration_kms_key_arn))
+    name: ((properties-configuration_iaas_configuration_name))
+    region: ((properties-configuration_iaas_configuration_region))
+    security_group: ((properties-configuration_iaas_configuration_security_group))
   security_configuration:
     generate_vm_passwords: true
     opsmanager_root_ca_trusted_certs: false
@@ -68,6 +72,7 @@ resource-configuration:
     persistent_disk:
       size_mb: automatic
     instance_type:
-      id: automatic
+      id: m4.large
     internet_connected: false
 vmextensions-configuration: []
+
