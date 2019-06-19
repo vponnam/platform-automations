@@ -150,3 +150,46 @@ jobs:
       - name: src
       run:
         path: src/az/iaas-provision/delete-iaas.sh
+
+# Job to configure OpsMan
+- name: explicit-configure-opsman
+  plan:
+  - get: src
+  - task: configure-director-auth
+    params:
+      OM_ENV: ((environment))
+      OM_AUTH: ((director-auth))
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source: {repository: vponnam/pipelines}
+      inputs:
+      - name: src
+      outputs:
+      - name: om-configs
+      run:
+        path: bash
+        args:
+        - "-c"
+        - |
+          bosh int <(echo "${OM_ENV}") > om-configs/env.yml
+          bosh int <(echo "${OM_AUTH}") > om-configs/auth.yml
+  - task: configure-director-properties
+    params:
+      Director_Prop: ((director-properties))
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source: {repository: vponnam/pipelines}
+      inputs:
+      - name: src
+      - name: om-configs
+      run:
+        path: bash
+        args:
+        - "-c"
+        - |
+          bosh int <(echo "${Director_Prop}") > dir-params.yml
+          om --env om-configs/env.yml configure-director -c src/az/director/director.yml --vars-file dir-params.yml
