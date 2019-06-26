@@ -23,9 +23,9 @@ properties-configuration:
     resource_group_name: ((resource_group_name))
     bosh_storage_account_name: ((bosh_storage_account_name))
     storage_account_type: Standard_LRS
-    ssh_public_key:
+    ssh_public_key: |-
       ((ssh_public_key))
-    ssh_private_key:
+    ssh_private_key: |-
       ((ssh_private_key))
   director_configuration:
     allow_legacy_agents: true
