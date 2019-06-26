@@ -13,18 +13,20 @@ networks-configuration:
       gateway: 10.0.0.1
       reserved_ip_ranges: 10.0.0.1-10.0.0.10
       availability_zone_names:
-      - "null" 
+      - "null"
 properties-configuration:
   iaas_configuration:
-    subscription_id: ((subscription)) 
-    tenant_id: ((tenant_id)) 
-    client_id: ((client_id)) 
-    client_secret: ((client_secret)) 
-    resource_group_name: ((resource_group_name)) 
-    bosh_storage_account_name: ((bosh_storage_account_name)) 
+    subscription_id: ((subscription))
+    tenant_id: ((tenant_id))
+    client_id: ((client_id))
+    client_secret: ((client_secret))
+    resource_group_name: ((resource_group_name))
+    bosh_storage_account_name: ((bosh_storage_account_name))
     storage_account_type: Standard_LRS
-    ssh_public_key: ((ssh_public_key)) 
-    ssh_private_key: ((ssh_private_key))
+    ssh_public_key:
+      ((ssh_public_key))
+    ssh_private_key:
+      ((ssh_private_key))
   director_configuration:
     allow_legacy_agents: true
     blobstore_type: local
