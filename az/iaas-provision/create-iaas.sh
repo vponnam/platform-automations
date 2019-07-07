@@ -79,10 +79,10 @@ az network nic create --vnet-name ${NETWORK} \
 --name opsman-nic --location ${LOCATION}
 
 #Image upload handling when using Managed disks
-if [[ $(az storage blob show --name opsman-${OM_VERSION}.vhd --container-name opsmanager --connection-string ${CONNECTION_STRING} | jq -r .name) = "opsman-${OM_VERSION}.vhd" ]] 
+if [[ $(az storage blob show --name opsman-${OM_VERSION}.vhd --container-name opsmanager --connection-string ${CONNECTION_STRING} | jq -r .name) = "opsman-${OM_VERSION}.vhd" ]]
 then
   printf "\nopsman-${OM_VERSION}.vhd previously uploaded to blobstore\n"
-else  
+else
 az storage blob copy start --source-uri ${OPS_MAN_IMAGE_URL} \
 --connection-string ${CONNECTION_STRING} \
 --destination-container opsmanager \
@@ -126,9 +126,15 @@ printf "Retrying the vm create task..\n"
 sleep 15
 done
 
-echo "OpsManager VM can be access by using this IP: ${opsmanIP}" 
+echo "OpsManager VM can be access by using this IP: ${opsmanIP}"
 
+
+#Create web-lb for PAS tile
 PAS_Domain_IP=$(az network public-ip create --name pas-domains-ip --resource-group ${USER} --location ${LOCATION} --allocation-method Static | jq -r .publicIp.ipAddress)
+vault write concourse/main/${USER}/pas-web-ip value=${PAS_Domain_IP}
+printf "API endpoint for PAS: api.${PAS_Domain_IP}.xip.io\n"
+vault write concourse/main/${USER}/pas-domain value=${PAS_Domain_IP}.xip.io
 
-echo "IP for PAS wildcard domains: *.${PAS_Domain_IP}.xip.io"
-vault write concourse/main/${USER}/pas-domain value=*.${PAS_Domain_IP}.xip.io
+az network lb create -g ${USER} -n pas-web-elb --public-ip-address pas-domains-ip
+az network lb rule create -g ${USER} --lb-name pas-web-elb --name http --protocol tcp --frontend-port 80 --backend-port 80
+az network lb rule create -g ${USER} --lb-name pas-web-elb --name https --protocol tcp --frontend-port 443 --backend-port 443

@@ -17,6 +17,7 @@ az disk delete -g ${USER} -n ${OM_DISK} --yes
 az image delete -g ${USER} -n opsman-image-${OM_VERSION}
 
 #Delete Public IPs
+az network lb delete -g ${USER} -n pas-web-elb
 az network public-ip delete -g ${USER} -n ${PAS_PUB_IP}
 az network public-ip delete -g ${USER} -n ${OM_IP}
 
@@ -41,6 +42,10 @@ vault delete concourse/main/${USER}/storage-account
 vault delete concourse/main/${USER}/resource-group
 vault delete concourse/main/${USER}/network
 vault delete concourse/main/${USER}/subnet
+vault delete concourse/main/${USER}/pas-web-ip
+vault delete concourse/main/${USER}/pas-domain
+vault delete concourse/main/${USER}/pas-cert
+vault delete concourse/main/${USER}/pas-key
 
 
 printf "\nSuccessfully completed clean-up process.\n"

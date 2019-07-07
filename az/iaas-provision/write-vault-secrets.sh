@@ -13,12 +13,14 @@ vault write concourse/main/${USER}/subnet value=$SUBNET
 
 
 #Create the wildcard certs for app/sys domain/s
-domain=$(vault read -field=value concourse/main/${USER}/pas-domain)
+webIP=$(vault read -field=value concourse/main/${USER}/pas-web-ip)
 
 # ssh key-pair for the above domain
-openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
-    -subj "/C=US/CN=${domain}" \
-    -keyout pas.key  -out pas.cert
+
+openssl req -new -newkey rsa:4096 -days 3 -nodes -x509 \
+  -subj "/C=US/CN=*.${webIP}.xip.io" \
+  -reqexts SAN -extensions SAN -config <(cat /etc/ssl/openssl.cnf <(printf "[SAN]\nsubjectAltName=DNS:*.login.${webIP}.xip.io,DNS:*.uaa.${webIP}.xip.io,DNS:*.uaa.${webIP}.nip.io,DNS:*.login.${webIP}.nip.io,DNS:*.${webIP}.nip.io")) \
+  -keyout pas.key  -out pas.cert
 
 vault write concourse/main/${USER}/pas-cert value=@pas.cert
 vault write concourse/main/${USER}/pas-key value=@pas.key
