@@ -24,3 +24,6 @@ openssl req -new -newkey rsa:4096 -days 3 -nodes -x509 \
 
 vault write concourse/main/${USER}/pas-cert value=@pas.cert
 vault write concourse/main/${USER}/pas-key value=@pas.key
+
+credhubkey=$(openssl rand -base64 24)
+vault write concourse/main/${USER}/credkey01 value=$credhubkey

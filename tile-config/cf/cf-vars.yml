@@ -2,8 +2,8 @@ sys-domain: ((sys_domain))
 apps-domain: ((app_domain))
 mysql-email: test@test.com
 credhub-key01: ((credkey01))
-wildcard-cert: ((poe_cert01))
-wildcard-key: ((poe_key01))
+wildcard-cert: ((wildcard-cert))
+wildcard-key: ((wildcard-key))
 value: 234
 value: 234
 name: PCF-Network

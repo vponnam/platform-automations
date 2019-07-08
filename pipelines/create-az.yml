@@ -245,6 +245,6 @@ jobs:
         type: docker-image
         source: {repository: vponnam/pipelines}
       inputs:
-      - src
+      - name: src
       run:
         path: src/tile-config/cf/configure-pas.sh

@@ -1,5 +1,7 @@
 cf-vars:
-  sys-domain: ((sys_domain))
-  apps-domain: ((app_domain))
+  sys_domain: ((pas-domain))
+  apps_domain: ((pas-domain))
   mysql-email: test@test.com
   credhub-key01: ((credkey01))
+
+pas-version: 2.4.9
