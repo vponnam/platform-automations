@@ -211,14 +211,15 @@ jobs:
 - name: PAS-tile-Upload
   plan:
   - get: src
+    passed: [Create-OM]
   - get: pas
     params:
       globs: ["cf-*.pivotal"]
   - task: upload-pas
+    trigger: true
     params:
       api_token: ((api-token))
       OM_ENV: ((environment))
-      OM_AUTH: ((director-auth))
     config:
       platform: linux
       image_resource:
@@ -233,12 +234,12 @@ jobs:
 - name: PAS-tile-Configure
   plan:
   - get: src
+    passed: [PAS-tile-Upload, Create-OM]
   - task: configure-pas
+    trigger: true
     params:
       OM_ENV: ((environment))
-      OM_AUTH: ((director-auth))
       cf-vars: ((cf-vars))
-
     config:
       platform: linux
       image_resource:
