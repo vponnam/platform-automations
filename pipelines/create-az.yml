@@ -1,10 +1,26 @@
 ---
+resource_types:
+- name: pivnet
+  type: docker-image
+  source:
+    repository: pivotalcf/pivnet-resource
+    tag: latest-final
+
+
 resources:
 - name: src
   type: git
   source:
     uri: https://github.com/vponnam/platform-automations.git
     branch: dev
+
+# resource for pas tile download from pivnet
+- name: pas
+  type: pivnet
+  source:
+    api_token: ((api-token))
+    product_slug: elastic-runtime
+    product_version: ((pas-version))
 
 jobs:
 - name: Create-OM
@@ -190,3 +206,45 @@ jobs:
       - name: om-configs
       run:
         path: src/az/director/configure.sh
+
+# PAS tile uplaod and config
+- name: PAS-tile-Upload
+  plan:
+  - get: src
+  - get: pas
+    params:
+      globs: ["cf-*.pivotal"]
+  - task: upload-pas
+    params:
+      api_token: ((api-token))
+      OM_ENV: ((environment))
+      OM_AUTH: ((director-auth))
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source: {repository: vponnam/pipelines}
+      inputs:
+      - name: src
+      - name: pas
+      run:
+        path: src/tile-config/upload-tile.sh
+
+- name: PAS-tile-Configure
+  plan:
+  - get: src
+  - task: configure-pas
+    params:
+      OM_ENV: ((environment))
+      OM_AUTH: ((director-auth))
+      cf-vars: ((cf-vars))
+
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source: {repository: vponnam/pipelines}
+      inputs:
+      - src
+      run:
+        path: src/tile-config/cf/configure-pas.sh

@@ -1,0 +1,28 @@
+sys-domain: ((sys_domain))
+apps-domain: ((app_domain))
+mysql-email: test@test.com
+credhub-key01: ((credkey01))
+wildcard-cert: ((poe_cert01))
+wildcard-key: ((poe_key01))
+value: 234
+value: 234
+name: PCF-Network
+instances:
+  clock_global: 1
+  cc: 1
+  cc_worker: 1
+  diego_brain: 1
+  diego_cell: 1
+  diego_database: 1
+  doppler: 1
+  ha_proxy: 1
+  loggregrator: 1
+  mysql: 1
+  mysql_proxy: 1
+  nats: 1
+  nfs_server: 1
+  router: 1
+  syslog_adapter: 1
+  syslg_scheduler: 1
+  tcp_router: 0
+  uaa: 1
