@@ -25,7 +25,7 @@ product-properties:
       primary: true
       provider: internal
   .uaa.service_provider_key_credentials:
-    certificate:
+    value:
       cert_pem: ((wildcard-cert))
       private_key_pem: ((wildcard-key))
   .properties.networking_poe_ssl_certs:
