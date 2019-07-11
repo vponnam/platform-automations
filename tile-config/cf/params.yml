@@ -3,6 +3,7 @@ cf-vars:
   apps_domain: ((pas-domain))
   mysql-email: test@test.com
   credhub-key01: ((credkey01))
+  network-name: ((network))
 
 pas-version: 2.4.9
 api-token: ((vponnam-api-token))

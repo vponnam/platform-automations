@@ -4,8 +4,8 @@ mysql-email: test@test.com
 credhub-key01: ((credkey01))
 wildcard-cert: ((wildcard-cert))
 wildcard-key: ((wildcard-key))
-value: 234
-value: 234
+router-idle-timeout: 234
+router-request-timeout: 234
 name: PCF-Network
 instances:
   clock_global: 1
