@@ -6,6 +6,8 @@ product-properties:
     value: ((sys-domain))
   .ha_proxy.skip_cert_verify:
     value: true
+  .properties.haproxy_forward_tls:
+    value: disable
   .mysql_monitor.recipient_email:
     value: ((mysql-email))
   .properties.cf_networking_enable_space_developer_self_service:
@@ -22,6 +24,9 @@ product-properties:
       name: key1
       primary: true
       provider: internal
+  .uaa.service_provider_key_credentials:
+    cert_pem: ((wildcard-cert))
+    private_key_pem: ((wildcard-key))
   .properties.networking_poe_ssl_certs:
     value:
     - name: wildcard
