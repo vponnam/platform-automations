@@ -3,7 +3,7 @@ product-properties:
   .cloud_controller.apps_domain:
     value: ((apps-domain))
   .cloud_controller.system_domain:
-    value: ((sys-domain)) 
+    value: ((sys-domain))
   .ha_proxy.skip_cert_verify:
     value: true
   .mysql_monitor.recipient_email:
@@ -56,7 +56,7 @@ resource-config:
   clock_global:
     instances: ((instances.clock_global))
   cloud_controller:
-    instances: ((instance.cc)) 
+    instances: ((instances.cc))
   cloud_controller_worker:
     instances: ((instances.cc_worker))
   consul_server:
@@ -68,7 +68,7 @@ resource-config:
   diego_cell:
     instances: ((instances.diego_cell))
   diego_database:
-    instances: ((instances.diego_database)) 
+    instances: ((instances.diego_database))
   doppler:
     instances: ((instances.doppler))
   ha_proxy:
@@ -76,45 +76,45 @@ resource-config:
   loggregator_trafficcontroller:
     instances: ((instances.loggregrator))
   mysql:
-    instances: ((instances.mysql)) 
+    instances: ((instances.mysql))
     persistent_disk:
       size_mb: "20480"
   mysql_monitor:
     instances: automatic
   mysql_proxy:
-    instances: ((instances.mysql_proxy)) 
+    instances: ((instances.mysql_proxy))
   nats:
     instances: ((instances.nats))
   nfs_server:
-    instances: ((instances.nfs_server)) 
+    instances: ((instances.nfs_server))
     persistent_disk:
       size_mb: "20480"
   router:
-    instances: ((instances.router)) 
+    instances: ((instances.router))
     elb_names:
     - pas-elb-web-ip
   syslog_adapter:
     instances: ((instances.syslog_adapter))
   syslog_scheduler:
-    instances: ((instances.syslg_scheduler)) 
+    instances: ((instances.syslg_scheduler))
   tcp_router:
     instances: ((instances.tcp_router))
   uaa:
-    instances: ((instances.uaa)) 
+    instances: ((instances.uaa))
 errand-config:
   deploy-autoscaler:
-    post-deploy-state: true 
+    post-deploy-state: false
   deploy-notifications:
-    post-deploy-state: true
+    post-deploy-state: false
   deploy-notifications-ui:
-    post-deploy-state: true
+    post-deploy-state: false
   nfsbrokerpush:
-    post-deploy-state: true
+    post-deploy-state: false
   push-apps-manager:
     post-deploy-state: true
   push-usage-service:
-    post-deploy-state: true
+    post-deploy-state: false
   smoke_tests:
     post-deploy-state: true
   test-autoscaling:
-    post-deploy-state: true
+    post-deploy-state: false
