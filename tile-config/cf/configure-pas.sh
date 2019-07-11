@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -xu
+
 vault read --field=value concourse/main/vponnam/pas-cert > cert
 vault read --field=value concourse/main/vponnam/pas-key > key
 
@@ -8,4 +10,4 @@ bosh int <(echo "${cf-vars}") > cf-vars.yml
 bosh int <(echo "${OM_ENV}") > env.yml
 
 om --env env.yml stage-product -p cf -v ${pas_version}
-om --env env.yml configure-product -c src/tile-config/cf/cf-properties.yml -l cf-vars.yml -l cf-vars.yml -l keys.yml
+om --env env.yml configure-product -c src/tile-config/cf/cf-properties.yml  --vars-file cf-vars.yml  --vars-file cf-vars.yml  --vars-file keys.yml

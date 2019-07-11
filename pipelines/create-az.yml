@@ -212,7 +212,6 @@ jobs:
   plan:
   - get: pas
   - get: src
-    passed: [Create-OM]
     params:
       globs: ["cf-*.pivotal"]
   - task: upload-pas
@@ -236,7 +235,6 @@ jobs:
 - name: PAS-tile-Configure
   plan:
   - get: src
-    passed: [PAS-tile-Upload, Create-OM]
   - task: configure-pas
     params:
       VAULT_TOKEN: ((vault-token))
