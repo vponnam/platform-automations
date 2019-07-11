@@ -1,7 +1,7 @@
 sys-domain: ((sys_domain))
 apps-domain: ((apps_domain))
 mysql-email: test@test.com
-credhub-key01: ((credkey01))
+credhubkey: ((credkey01))
 wildcard-cert: ((wildcard-cert))
 wildcard-key: ((wildcard-key))
 router-idle-timeout: 234

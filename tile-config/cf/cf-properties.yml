@@ -20,7 +20,7 @@ product-properties:
     - name: key1
       primary: true
       provider: internal
-      secret: ((credhub-key01))
+      secret: ((credhubkey))
   .properties.networking_poe_ssl_certs:
     value:
     - name: wildcard
