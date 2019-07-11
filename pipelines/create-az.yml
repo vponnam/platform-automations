@@ -210,14 +210,16 @@ jobs:
 # PAS tile uplaod and config
 - name: PAS-tile-Upload
   plan:
+  - get: pas
   - get: src
     passed: [Create-OM]
-  - get: pas
     params:
       globs: ["cf-*.pivotal"]
   - task: upload-pas
-    trigger: true
     params:
+      VAULT_TOKEN: ((vault-token))
+      VAULT_ADDR: ((vault-addr))
+      VAULT_SKIP_VERIFY: ((vault-ssl))
       api_token: ((api-token))
       OM_ENV: ((environment))
     config:
@@ -236,10 +238,13 @@ jobs:
   - get: src
     passed: [PAS-tile-Upload, Create-OM]
   - task: configure-pas
-    trigger: true
     params:
+      VAULT_TOKEN: ((vault-token))
+      VAULT_ADDR: ((vault-addr))
+      VAULT_SKIP_VERIFY: ((vault-ssl))
       OM_ENV: ((environment))
       cf-vars: ((cf-vars))
+      pas_version: ((pas-version))
     config:
       platform: linux
       image_resource:
