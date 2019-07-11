@@ -241,7 +241,7 @@ jobs:
       VAULT_ADDR: ((vault-addr))
       VAULT_SKIP_VERIFY: ((vault-ssl))
       OM_ENV: ((environment))
-      cf-vars: ((cf-vars))
+      cf_vars: ((cf-vars))
       pas_version: ((pas-version))
     config:
       platform: linux
