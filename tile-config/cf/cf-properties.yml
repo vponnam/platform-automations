@@ -17,10 +17,11 @@ product-properties:
     value: default
   .properties.credhub_key_encryption_passwords:
     value:
-    - name: key1
+    - key:
+        secret: ((credhub-key01))
+      name: key1
       primary: true
       provider: internal
-      secret: ((credhubkey))
   .properties.networking_poe_ssl_certs:
     value:
     - name: wildcard
