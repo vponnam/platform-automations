@@ -1,12 +1,12 @@
 sys-domain: ((sys_domain))
-apps-domain: ((app_domain))
+apps-domain: ((apps_domain))
 mysql-email: test@test.com
 credhub-key01: ((credkey01))
 wildcard-cert: ((wildcard-cert))
 wildcard-key: ((wildcard-key))
 router-idle-timeout: 234
 router-request-timeout: 234
-name: PCF-Network
+network-name: PCF-Network
 instances:
   clock_global: 1
   cc: 1
