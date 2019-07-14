@@ -99,7 +99,7 @@ resource-config:
   router:
     instances: ((instances.router))
     elb_names:
-    - pas-elb-web-ip
+    - pas-web-elb
   syslog_adapter:
     instances: ((instances.syslog_adapter))
   syslog_scheduler:

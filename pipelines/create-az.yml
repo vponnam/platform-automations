@@ -25,7 +25,6 @@ jobs:
 - name: Create-OM
   plan:
   - get: src
-    trigger: true
   - task: create-iaas-and-om
     params:
       USER: ((user))
@@ -210,13 +209,13 @@ jobs:
 # PAS tile uplaod and config
 - name: PAS-tile-Upload
   plan:
-  - get: pas
   - get: src
-    params:
-      globs: ["cf-*.pivotal"]
     trigger: true
     passed:
       - Create-OM
+  - get: pas
+    params:
+      globs: ["cf-*.pivotal"]
   - task: upload-pas
     params:
       VAULT_TOKEN: ((vault-token))
