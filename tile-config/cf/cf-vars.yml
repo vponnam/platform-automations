@@ -15,7 +15,7 @@ instances:
   diego_cell: 1
   diego_database: 1
   doppler: 1
-  ha_proxy: 1
+  ha_proxy: 0
   loggregrator: 1
   mysql: 1
   mysql_proxy: 1
