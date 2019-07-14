@@ -13,3 +13,5 @@ om --env env.yml stage-product -p cf -v ${pas_version}
 
 bosh int src/tile-config/cf/cf-vars.yml -l cf-vars.yml -l keys.yml > vars.yml
 om --env env.yml configure-product -c src/tile-config/cf/cf-properties.yml  --vars-file vars.yml
+
+om --env env.yml apply-changes -i

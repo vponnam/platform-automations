@@ -6,7 +6,6 @@ resource_types:
     repository: pivotalcf/pivnet-resource
     tag: latest-final
 
-
 resources:
 - name: src
   type: git
@@ -26,6 +25,7 @@ jobs:
 - name: Create-OM
   plan:
   - get: src
+    trigger: true
   - task: create-iaas-and-om
     params:
       USER: ((user))
@@ -58,7 +58,7 @@ jobs:
 
   # set-up required vault creds for director config
   - task: write-vault-secrets
-    attempts: 3
+    attempts: 2
     params:
       NETWORK: ((network))
       SUBNET: ((subnet))
@@ -136,7 +136,7 @@ jobs:
           bosh int <(echo "${OM_ENV}") > env.yml
           om --env env.yml delete-installation
   - task: Delete-OM
-    attempts: 3
+    attempts: 2
     params:
       USER: ((user))
       LOCATION: ((location))
@@ -214,6 +214,9 @@ jobs:
   - get: src
     params:
       globs: ["cf-*.pivotal"]
+    trigger: true
+    passed:
+      - Create-OM
   - task: upload-pas
     params:
       VAULT_TOKEN: ((vault-token))
@@ -235,6 +238,9 @@ jobs:
 - name: PAS-tile-Configure
   plan:
   - get: src
+    trigger: true
+    passed:
+      - PAS-tile-Upload
   - task: configure-pas
     params:
       VAULT_TOKEN: ((vault-token))
