@@ -39,8 +39,15 @@ jobs:
       location: ((aws-region))
       NETWORK: ((aws-network))
       SUBNET: ((aws-subnet))
-
-
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source: {repository: vponnam/pipelines}
+      inputs:
+      - name: src
+      run:
+        path: src/aws/iaas-provision/write-vault-secrets.sh
 
 - name: AWS-Delete-OM
   plan:

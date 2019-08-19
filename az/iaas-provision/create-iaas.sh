@@ -132,8 +132,8 @@ echo "OpsManager VM can be access by using this IP: ${opsmanIP}"
 #Create web-lb for PAS tile
 PAS_Domain_IP=$(az network public-ip create --name pas-domains-ip --resource-group ${USER} --location ${LOCATION} --allocation-method Static | jq -r .publicIp.ipAddress)
 vault write concourse/main/${USER}/pas-web-ip value=${PAS_Domain_IP}
-printf "API endpoint for PAS: api.${PAS_Domain_IP}.xip.io\n"
-vault write concourse/main/${USER}/pas-domain value=${PAS_Domain_IP}.xip.io
+printf "API endpoint for PAS: api.${PAS_Domain_IP}.nip.io\n"
+vault write concourse/main/${USER}/pas-domain value=${PAS_Domain_IP}.nip.io
 
 az network lb create -g ${USER} -n pas-web-elb --public-ip-address pas-domains-ip
 az network lb rule create -g ${USER} --lb-name pas-web-elb --name http --protocol tcp --frontend-port 80 --backend-port 80

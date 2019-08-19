@@ -4,5 +4,5 @@ cf-vars:
   mysql-email: test@test.com
   credkey01: ((credkey01))
 
-pas-version: 2.4.9
+pas-version: 2.4.7
 api-token: ((vponnam-api-token))
