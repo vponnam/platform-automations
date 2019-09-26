@@ -14,9 +14,6 @@ product-properties:
     value: true
   .properties.cf_networking_internal_domain:
     value: apps.internal
-  .properties.cloud_controller_default_stack:
-    selected_option: default
-    value: default
   .properties.credhub_key_encryption_passwords:
     value:
     - key:
