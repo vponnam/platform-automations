@@ -63,8 +63,6 @@ resource-config:
     instances: ((instances.cc))
   cloud_controller_worker:
     instances: ((instances.cc_worker))
-  consul_server:
-    instances: automatic
   credhub:
     instances: 1
   diego_brain:
