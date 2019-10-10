@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -exu
+set -eu
 
 vault read --field=value concourse/main/om-ssh-private > om-ssh-key
 bosh int src/az/director/secrets.yml --var-file om-ssh-key=om-ssh-key > keys.yml
