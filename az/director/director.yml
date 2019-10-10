@@ -30,7 +30,7 @@ properties-configuration:
     storage_account_type: Standard_LRS
     ssh_public_key: ((ssh_public_key))
     ssh_private_key: ((ssh_private_key))
-    availability_mode: "Availability Sets"
+    availability_mode: availability_sets
   director_configuration:
     allow_legacy_agents: true
     blobstore_type: local
