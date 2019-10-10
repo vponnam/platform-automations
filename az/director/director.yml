@@ -1,7 +1,12 @@
+az-configuration:
+- name: "Availability Sets"
 network-assignment:
   network:
     name: PCF-Network
-  other_availability_zones: []
+  other_availability_zones:
+  - name: "Availability Sets"
+  singleton_availability_zone:
+    name: "Availability Sets"
 networks-configuration:
   icmp_checks_enabled: false
   networks:
@@ -13,7 +18,7 @@ networks-configuration:
       gateway: 10.0.0.1
       reserved_ip_ranges: 10.0.0.1-10.0.0.10
       availability_zone_names:
-      - "null"
+      - "Availability Sets"
 properties-configuration:
   iaas_configuration:
     subscription_id: ((subscription))
@@ -25,6 +30,7 @@ properties-configuration:
     storage_account_type: Standard_LRS
     ssh_public_key: ((ssh_public_key))
     ssh_private_key: ((ssh_private_key))
+    availability_mode: "Availability Sets"
   director_configuration:
     allow_legacy_agents: true
     blobstore_type: local

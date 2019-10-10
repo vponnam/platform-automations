@@ -21,6 +21,14 @@ resources:
     product_slug: elastic-runtime
     product_version: ((pas-version))
 
+- name: opsman
+  type: pivnet
+  source:
+    api_token: ((api-token))
+    product_slug: ops-manager
+    product_version: ((om-version))
+    sort_by: semver
+
 jobs:
 - name: Create-OM
   plan:
@@ -210,9 +218,9 @@ jobs:
 - name: PAS-tile-Upload
   plan:
   - get: src
-    trigger: true
+    # trigger: true
     passed:
-      - Create-OM
+      # - Create-OM
   - get: pas
     params:
       globs: ["cf-*.pivotal"]
@@ -237,9 +245,9 @@ jobs:
 - name: PAS-tile-Configure
   plan:
   - get: src
-    trigger: true
+    # trigger: true
     passed:
-      - PAS-tile-Upload
+      # - PAS-tile-Upload
   - task: configure-pas
     params:
       VAULT_TOKEN: ((vault-token))
@@ -257,3 +265,25 @@ jobs:
       - name: src
       run:
         path: src/tile-config/cf/configure-pas.sh
+
+- name: Upgrade-OpsMan
+  plan:
+  - get: src
+  - get: opsman
+  - task: OpsManager-Upgrade
+    params:
+      globs: ["*azure*.yml"]
+    params:
+      VAULT_TOKEN: ((vault-token))
+      VAULT_ADDR: ((vault-addr))
+      VAULT_SKIP_VERIFY: ((vault-ssl))
+      state_file: ((environment))
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source: {repository: vponnam/pipelines}
+      inputs:
+      - name: src
+      run:
+        path: src/upgrade-om.sh
